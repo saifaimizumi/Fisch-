@@ -63,7 +63,16 @@ Options.MyToggle:SetValue(false)
 local Toggle = Tabs.Genaral:AddToggle("MyToggle", {Title = "Auto reel", Default = true })
 
     Toggle:OnChanged(function(Value)
-    end)
+    _G.reel = true
+
+while _G.reel do wait()
+local args = {
+    [1] = 100,
+    [2] = false
+}
+
+game:GetService("ReplicatedStorage").events.reelfinished:FireServer(unpack(args))
+        end)
 
     Options.MyToggle:SetValue(false)
 
