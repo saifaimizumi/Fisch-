@@ -1,6 +1,6 @@
 --lyxme Hub 
 
-
+_G.reel = true
 
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
@@ -63,12 +63,9 @@ Options.MyToggle:SetValue(false)
 local Toggle = Tabs.Genaral:AddToggle("MyToggle", {Title = "Auto reel", Default = true })
 
     Toggle:OnChanged(function(Value)
-    _G.reel = Value
-    if _G.reel then
-            while _G.reel do wait()
-                game:GetService("ReplicatedStorage").events.reelfinished:FireServer(unpack(args))
-       end
-    end
+    while _G.reel do wait()
+            game:GetService("ReplicatedStorage").events.reelfinished:FireServer(unpack(args))
+        end
     end)
 
     Options.MyToggle:SetValue(false)
