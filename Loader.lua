@@ -1,62 +1,4 @@
---Cave Hub  
-
- --Vars
- LocalPlayer = game:GetService("Players").LocalPlayer
- Camera = workspace.CurrentCamera
- VirtualUser = game:GetService("VirtualUser")
- MarketplaceService = game:GetService("MarketplaceService")
- 
- --Get Current Vehicle
- function GetCurrentVehicle()
-     return LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") and LocalPlayer.Character.Humanoid.SeatPart and LocalPlayer.Character.Humanoid.SeatPart.Parent
- end
- 
- --Regular TP
- function TP(cframe)
-     GetCurrentVehicle():SetPrimaryPartCFrame(cframe)
- end
- 
- --Velocity TP
- function VelocityTP(cframe)
-     TeleportSpeed = math.random(600, 600)
-     Car = GetCurrentVehicle()
-     local BodyGyro = Instance.new("BodyGyro", Car.PrimaryPart)
-     BodyGyro.P = 5000
-     BodyGyro.maxTorque = Vector3.new(9e9, 9e9, 9e9)
-     BodyGyro.CFrame = Car.PrimaryPart.CFrame
-     local BodyVelocity = Instance.new("BodyVelocity", Car.PrimaryPart)
-     BodyVelocity.MaxForce = Vector3.new(9e9, 9e9, 9e9)
-     BodyVelocity.Velocity = CFrame.new(Car.PrimaryPart.Position, cframe.p).LookVector * TeleportSpeed
-     wait((Car.PrimaryPart.Position - cframe.p).Magnitude / TeleportSpeed)
-     BodyVelocity.Velocity = Vector3.new()
-     wait(0.1)
-     BodyVelocity:Destroy()
-     BodyGyro:Destroy()
- end
- 
- --Auto Farm
- StartPosition = CFrame.new(Vector3.new(-34567.375, 34.895652770996094, -32846.046875), Vector3.new())
- EndPosition = CFrame.new(Vector3.new(-31448.3515625, 34.925010681152344, -26616.25), Vector3.new())
- AutoFarmFunc = coroutine.create(function()
-     while wait() do
-         if not AutoFarm then
-             AutoFarmRunning = false
-             coroutine.yield()
-         end
-         AutoFarmRunning = true
-         pcall(function()
-             if not GetCurrentVehicle() and tick() - (LastNotif or 0) > 5 then
-                 LastNotif = tick()
-             else
-                 TP(StartPosition + (TouchTheRoad and Vector3.new(0,-5,0) or Vector3.new(0, -5, 0)))
-                 VelocityTP(EndPosition + (TouchTheRoad and Vector3.new(0,-5,0) or Vector3.new(0, -5, 0)))
-                 TP(EndPosition + (TouchTheRoad and Vector3.new(0,-5,0) or Vector3.new(0, -5, 0)))
-                 VelocityTP(StartPosition + (TouchTheRoad and Vector3.new(0,-5,0) or Vector3.new(0, -5, 0)))
-             end
-         end)
-     end
- end)
- 
+--lyxme Hub 
 
 
 
@@ -97,37 +39,7 @@ end
 local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Auto Shake", Default = false })
 
     Toggle:OnChanged(function(Value)
-    local PlayerGUI = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-local VirtualInputManager = game:GetService("VirtualInputManager")
-local LocalPlayer = game.Players.LocalPlayer
-
-local function shakeButton(button)
-    if _G.autoshake then
-        task.wait(0.1)
-        local pos = button.AbsolutePosition
-        local size = button.AbsoluteSize
-        VirtualInputManager:SendMouseButtonEvent(pos.X + size.X / 2, pos.Y + size.Y / 2, 0, true, LocalPlayer, 0)
-        VirtualInputManager:SendMouseButtonEvent(pos.X + size.X / 2, pos.Y + size.Y / 2, 0, false, LocalPlayer, 0)
-    end
-end
-
-local function onChildAdded(GUI)
-    if GUI:IsA("ScreenGui") and GUI.Name == "shakeui" then
-        local safezone = GUI:FindFirstChild("safezone")
-        if safezone then
-            safezone.ChildAdded:Connect(function(child)
-                if child:IsA("ImageButton") and child.Name == "button" then
-                    shakeButton(child)
-                end
-            end)
-        end
-    end
-end
-
-local shakeUI = PlayerGUI:FindFirstChild("shakeui")
-if shakeUI then onChildAdded(shakeUI) end
-
-PlayerGUI.ChildAdded:Connect(onChildAdded)
+    end)
   
     Options.MyToggle:SetValue(false)
 
@@ -135,56 +47,11 @@ PlayerGUI.ChildAdded:Connect(onChildAdded)
 local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Auto Sell", Default = false })
 
 Toggle:OnChanged(function(Value)
-_G.Rewards = Value
-if _G.Rewards then
-     while _G.Rewards do wait()
-          local args = {
-               [1] = 1
-           }
-           
-          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("PlayRewards"):FireServer(unpack(args))
-          
-          local args = {
-               [1] = 2
-           }
-          
-          game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("PlayRewards"):FireServer(unpack(args))
-          
-          local args = {
-               [1] = 3
-           }
-           
-           game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("PlayRewards"):FireServer(unpack(args))
-           
-          
-           local args = {
-               [1] = 4
-           }
-           
-           game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("PlayRewards"):FireServer(unpack(args))
-           
-
-           local args = {
-               [1] = 5
-           }
-           
-           game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("PlayRewards"):FireServer(unpack(args))
-           
-
-           local args = {
-               [1] = 6
-           }
-           
-           game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("PlayRewards"):FireServer(unpack(args))
-          
-
-           local args = {
-               [1] = 7
-           }
-           
-           game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("PlayRewards"):FireServer(unpack(args))
-
-     end
+_G.sell = Value
+if _G.sell then
+     while _G.sell do wait()
+          workspace.world.npcs:FindFirstChild("Marc Merchant").merchant.sellall:InvokeServer()
+   end
 end
 end)
 
@@ -212,7 +79,7 @@ local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "AntiAFK", Default = fal
 
 
     Tabs.Settings:AddButton({
-        Title = "Rejoin",
+        Title = "rejoin server",
         Description = "",
         Callback = function()
             local ts = game:GetService("TeleportService")
@@ -226,7 +93,7 @@ local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "AntiAFK", Default = fal
     })
     
     Tabs.Settings:AddButton({
-        Title = "Hop To Low Server",
+        Title = "Hop Server",
         Description = "",
         Callback = function()
             local Http = game:GetService("HttpService")
