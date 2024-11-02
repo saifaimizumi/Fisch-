@@ -1,6 +1,14 @@
 --lyxme Hub 
-
 _G.reel = true
+
+while _G.reel do wait()
+local args = {
+    [1] = 100,
+    [2] = false
+}
+
+game:GetService("ReplicatedStorage").events.reelfinished:FireServer(unpack(args))
+end
 
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
