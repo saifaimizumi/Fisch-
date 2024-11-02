@@ -68,15 +68,17 @@ Options.MyToggle:SetValue(false)
 
 
 
-local Toggle = Tabs.Genaral:AddToggle("MyToggle", {Title = "Auto reel", Default = true })
+Tabs.Genaral:AddButton({
+        Title = "Equip Rod",
+        Description = "",
+        Callback = function()
+            local args = {
+    [1] = game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Lucky Rod")
+}
 
-    Toggle:OnChanged(function(Value)
-    while _G.reel do wait()
-            game:GetService("ReplicatedStorage").events.reelfinished:FireServer(unpack(args))
+game:GetService("Players").LocalPlayer.PlayerGui.hud.safezone.backpack.events.equip:FireServer(unpack(args))
         end
-    end)
-
-    Options.MyToggle:SetValue(false)
+    })
 
 
 
