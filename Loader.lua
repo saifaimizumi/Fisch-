@@ -42,7 +42,7 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 local Window = Fluent:CreateWindow({
-    Title = "[🤿]Fisch | lyxme Hub",
+    Title = "[🐟] Fisch | lyxme Hub",
     SubTitle = "",
     TabWidth = 160,
     Size = UDim2.fromOffset(510, 390),
@@ -53,7 +53,8 @@ local Window = Fluent:CreateWindow({
 
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
-    Genaral = Window:AddTab({ Title = "General", Icon = "rbxassetid://11433532654" }),
+    Genaral = Window:AddTab({ Title = "General", Icon = "home" }),
+    Gifting = Window:AddTab({ Title = "Gifting", Icon = "gift" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
